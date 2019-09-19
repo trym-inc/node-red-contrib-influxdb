@@ -175,6 +175,7 @@ module.exports = function(RED) {
                 var writeOptions = {};
                 var precision = msg.hasOwnProperty('precision') ? msg.precision : node.precision;
                 var retentionPolicy = msg.hasOwnProperty('retentionPolicy') ? msg.retentionPolicy : node.retentionPolicy;
+                var database = msg.hasOwnProperty('database') ? msg.database : node.database;
 
                 if (precision) {
                     writeOptions.precision = precision;
@@ -184,6 +185,10 @@ module.exports = function(RED) {
                     writeOptions.retentionPolicy = retentionPolicy;
                 }
 
+                if (database) {
+                    writeOptions.database = database;
+                }
+                
                 client.writePoints(msg.payload, writeOptions).catch(function(err) {
                     node.error(err,msg);
                 });
